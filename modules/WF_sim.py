@@ -183,7 +183,10 @@ def WF_sim(Npop,counts_per_demeweek, Csn, ND, T, A=None,Ntraj=100, freqini=[]):
     for t in range(T):
             for j in range(ND):
                 for l in range(Ntraj):
-                    counts[t,l,j]  =np.round(np.random.binomial(int(counts_deme[j,t]/Csn[j]), B[t,l,j], size=1)*Csn[j])
+                    if Csn[j] !=0:
+                        counts[t,l,j]  =np.round(np.random.binomial(int(counts_deme[j,t]/Csn[j]), B[t,l,j], size=1)*Csn[j])
+                    else:
+                        counts[t,l,j]  = B[t,l,j]*counts_deme[j,t]
     counts=counts.transpose([2,1,0])
 
     return A,counts,B
